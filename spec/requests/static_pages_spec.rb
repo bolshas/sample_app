@@ -1,4 +1,5 @@
 require 'spec_helper'
+include ActionView::Helpers::TextHelper
 
 describe "StaticPages" do
 
@@ -46,6 +47,10 @@ describe "StaticPages" do
         user.feed.each do |item|
           page.should have_selector("li##{item.id}", text: item.content)          
         end        
+      end
+
+      it "should render the number of user's microposts" do
+        page.should have_selector("span", text: pluralize(user.microposts.count, "micropost"))
       end
     end
   end
